@@ -2,15 +2,39 @@ import "./App.css";
 
 import Player from "./components/Player/Player.jsx";
 import GameBoard from "./components/GameBoard/GameBoard.jsx";
+import LongTurn from "./components/LongTurn/LongTurn.jsx";
 import { useState } from "react";
 
 /* Cuando se esta desarrollando se esta en desarrollo y react toma una medida de renderizar el componente 2 veces por cuestiones de seguridad para encontrar error en el código. Cuando se haga la compilación  el código pasa a producción y deja de renderizar 2 entre otras cosas */
-
+/*
+No es recomendado y es mala practica actualizar el estado de un componente con su estado  
+ */
 function App() {
   const [activePlayer, setActivePlayer] = useState("X");
+  const [gameTurns, setGameTurns] = useState([]);
 
-  function handlePickedSquare() {
+  function handlePickedSquare(rowIndex, colIndex) {
+    debugger;
     setActivePlayer(() => (activePlayer === "X" ? "O" : "X"));
+    /* OJO */
+    //Prohibido actualizar el estado de un componente con otro estado
+    setGameTurns((prevGameTurns) => {
+      debugger;
+      let actualSymbol =
+        gameTurns.length > 0 && gameTurns[0].symbol == "X" ? "O" : "X";
+      const actualGameTurns = [
+        {
+          square: {
+            rowIndex: rowIndex,
+            colIndex: colIndex,
+          },
+          symbol: actualSymbol,
+        },
+        ...prevGameTurns,
+      ];
+
+      return actualGameTurns;
+    });
   }
   return (
     <>
@@ -30,9 +54,10 @@ function App() {
           </ol>
           {/*onSelectSquare es para que el componente se entere cual es el símbolo */}
           <GameBoard
-            activePlayer={activePlayer}
-            onSelectSquare={() => handlePickedSquare()}
+            gameTurns={gameTurns}
+            onSelectSquare={handlePickedSquare}
           />
+          <LongTurn gameTurns={gameTurns} />
         </div>
       </main>
     </>
