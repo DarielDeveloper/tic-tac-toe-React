@@ -2,11 +2,13 @@ import "./Player.css";
 import { useState } from "react";
 
 export default function Player({
-  player_name_initial,
+  player_name,
   player_symbol,
   is_active,
+  keyNamePlayer,
+  handleChangeName,
 }) {
-  const [player_name, setPlayerName] = useState(player_name_initial);
+  //const [player_name, setPlayerName] = useState(player_name_initial);
 
   const [isEditing, setIsEditing] = useState(false);
   function handleClickButton() {
@@ -16,15 +18,15 @@ export default function Player({
 
     setIsEditing((isEditing) => !isEditing);
   }
-
+  /*
   function handleChangeInput(event) {
-    /* Capturo el valor del input con el target que es el elemento y a este se le pide el value */
+    //Capturo el valor del input con el target que es el elemento y a este se le pide el value
     setPlayerName(() => event.target.value);
-  }
+  }*/
   const inputSpanName = isEditing ? (
     <input
       /* Capturo el evento, en este caso lo llamamos el object event, para posterior enviarlo a la función para setear el useState del nombre del jugador*/
-      onChange={(event) => handleChangeInput(event)}
+      onChange={(event) => handleChangeName(event, keyNamePlayer)}
       type="text"
       className="inputName"
       required

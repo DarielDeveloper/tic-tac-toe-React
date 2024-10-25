@@ -1,40 +1,29 @@
-#gameBoard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 3rem;
-  margin: 1rem 0;
-  padding: 0;
-  flex-direction: column;
+#logTurns {
+  max-width: 50rem;
+  color: white;
   list-style: none;
-}
-
-#gameBoard ol {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 3rem;
-  margin: 0;
+  margin: 2rem auto;
   padding: 0;
-  list-style: none;
+  font-size: 1.5rem;
 }
 
-#gameBoard button {
-  width: 10rem;
-  height: 10rem;
-  border: none;
-  background: #4e1a4c;
-  color: #ccc;
-  font-size: 5rem;
-  cursor: pointer;
-  font-family: "Caprasimo", cursive;
-  padding: 1rem;
-  border-radius: 6px;
-  background: linear-gradient(#4e1a4c, rgba(0, 0, 52, 0.346));
-}
-
-#gameBoard button:hover {
-  box-shadow: -5px 0 15px rgba(255, 0, 255, 0.5),
-    0 -5px 15px rgba(255, 0, 255, 0.5), 5px 0 15px rgba(241, 112, 12, 0.5),
+#logTurns li {
+  border-radius: 4px;
+  animation: slide-in-from-left 1s cubic-bezier(0.075, 0.82, 0.165, 1) forwards;
+  margin: 2rem 0rem;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid white;
+  border-radius: 0.7rem;
+  background: linear-gradient(#000034, #000034a3);
+  box-shadow:
+    -5px 0 15px rgba(255, 0, 255, 0.5),
+    0 -5px 15px rgba(255, 0, 255, 0.5),
+    5px 0 15px rgba(241, 112, 12, 0.5),
     0 5px 15px rgba(241, 112, 12, 0.5);
+  position: relative;
+}
+
+#logTurns li.highlighted {
+  background-color: #3f3b00;
+  color: white;
 }

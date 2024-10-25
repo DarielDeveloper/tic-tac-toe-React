@@ -1,13 +1,23 @@
 import "../GameBoard/GameBoard.css";
-import { useState } from "react";
 
 /* Se pone fuera del componente, porque cuando se renderiza se llama lo que se encuentra dentro  */
 /* Forma correcta  para la matriz 3X3*/
 const INITIAL_GAME_BOARD = [];
+let winnerGame = false;
+
 for (let i = 0; i < 3; i++) {
   INITIAL_GAME_BOARD.push(new Array(3).fill(null));
 }
 export default function GameBoard({ onSelectSquare, gameTurns }) {
+  function isWinningSquare(rowIndex, colIndex) {
+    if (gameTurns[0]?.hasWinner.isWinner) {
+      return gameTurns[0].hasWinner.combinationWiner.some(
+        (combination) =>
+          combination.row === rowIndex && combination.column === colIndex
+      );
+    }
+    return false;
+  }
   /*  
   Forma incorrecta de declarar una matriz
   const INITIAL_GAME_BOARD = [
@@ -37,9 +47,13 @@ export default function GameBoard({ onSelectSquare, gameTurns }) {
       onSelectSquare();
       }*/
   const gameBoard = INITIAL_GAME_BOARD;
-  debugger;
+
   for (const turn of gameTurns) {
-    const { square, symbol } = turn;
+    const { square, symbol, hasWinner } = turn;
+    winnerGame = hasWinner.isWinner;
+    if (winnerGame) {
+      break;
+    }
     const { rowIndex, colIndex } = square;
     gameBoard[rowIndex][colIndex] = symbol;
   }
@@ -53,11 +67,17 @@ export default function GameBoard({ onSelectSquare, gameTurns }) {
             {row.map((col, colIndex) => (
               <li key={colIndex}>
                 <button
+                  className={
+                    isWinningSquare(rowIndex, colIndex) ? "winningSquare" : ""
+                  }
                   /* Forma correcta de llamar la function cuando se active el evento click */
                   onClick={() => {
                     //Evitar que se sobrescriba el símbolo en una casilla que ya esta ocupada
-                    if (gameBoard[rowIndex][colIndex] == null)
-                      onSelectSquare(rowIndex, colIndex);
+                    if (gameBoard[rowIndex][colIndex] === null && !winnerGame) {
+                      console.log(winnerGame);
+
+                      onSelectSquare(rowIndex, colIndex, gameBoard);
+                    }
                   }}
                 >
                   {col}

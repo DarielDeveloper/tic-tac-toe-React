@@ -38,3 +38,11 @@
     0 -5px 15px rgba(255, 0, 255, 0.5), 5px 0 15px rgba(241, 112, 12, 0.5),
     0 5px 15px rgba(241, 112, 12, 0.5);
 }
+
+#gameBoard .winningSquare {
+  text-shadow: -5px 5px 20px rgba(255, 0, 255, 0.5),
+    0 -5px 15px rgba(255, 0, 255, 0.5),
+    5px 0 15px rgba(241, 112, 12, 0.5),
+    0 5px 15px rgba(241, 112, 12, 0.5);
+  animation: pulse-text-size 2s infinite ease-out;
+}
