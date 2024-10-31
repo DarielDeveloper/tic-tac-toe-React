@@ -9,6 +9,8 @@ for (let i = 0; i < 3; i++) {
   INITIAL_GAME_BOARD.push(new Array(3).fill(null));
 }
 export default function GameBoard({ onSelectSquare, gameTurns }) {
+  const gameBoard = [...INITIAL_GAME_BOARD.map((array) => [...array])];
+
   function isWinningSquare(rowIndex, colIndex) {
     if (gameTurns[0]?.hasWinner.isWinner) {
       return gameTurns[0].hasWinner.combinationWiner.some(
@@ -46,14 +48,11 @@ export default function GameBoard({ onSelectSquare, gameTurns }) {
       
       onSelectSquare();
       }*/
-  const gameBoard = INITIAL_GAME_BOARD;
 
   for (const turn of gameTurns) {
     const { square, symbol, hasWinner } = turn;
     winnerGame = hasWinner.isWinner;
-    if (winnerGame) {
-      break;
-    }
+
     const { rowIndex, colIndex } = square;
     gameBoard[rowIndex][colIndex] = symbol;
   }
@@ -74,8 +73,6 @@ export default function GameBoard({ onSelectSquare, gameTurns }) {
                   onClick={() => {
                     //Evitar que se sobrescriba el símbolo en una casilla que ya esta ocupada
                     if (gameBoard[rowIndex][colIndex] === null && !winnerGame) {
-                      console.log(winnerGame);
-
                       onSelectSquare(rowIndex, colIndex, gameBoard);
                     }
                   }}
