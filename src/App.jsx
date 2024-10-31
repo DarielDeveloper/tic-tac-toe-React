@@ -3,6 +3,7 @@ import "./App.css";
 import Player from "./components/Player/Player.jsx";
 import GameBoard from "./components/GameBoard/GameBoard.jsx";
 import LongTurn from "./components/LongTurn/LongTurn.jsx";
+import GameOver from "./Components/GameOver/GameOver.jsx";
 import { WINNING_COMBINATIONS } from "./data/winningCombination.js";
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ function App() {
         };
 
         if (
+          combinationWiner.firstSymbol &&
           combinationWiner.firstSymbol == combinationWiner.secundSymbol &&
           combinationWiner.firstSymbol == combinationWiner.thirdSymbol
         ) {
@@ -65,6 +67,9 @@ function App() {
     });
   }
 
+  function handleGameOver() {
+    setGameTurns([]);
+  }
   function handlePickedSquare(rowIndex, colIndex, gameBoard) {
     /* OJO */
     //Prohibido actualizar el estado de un componente con otro estado
@@ -113,12 +118,19 @@ function App() {
             />
           </ol>
           {/*onSelectSquare es para que el componente se entere cual es el símbolo */}
+
           <GameBoard
             gameTurns={gameTurns}
             onSelectSquare={handlePickedSquare}
           />
-          <LongTurn gameTurns={gameTurns} playerName={playerName} />
+          {gameTurns[0]?.hasWinner.isWinner && (
+            <GameOver title="Revancha" resetGameBoard={handleGameOver} />
+          )}
+          {gameTurns.length > 8 && !gameTurns[0]?.hasWinner.isWinner && (
+            <GameOver title="Iniciar partida" resetGameBoard={handleGameOver} />
+          )}
         </div>
+        <LongTurn gameTurns={gameTurns} playerName={playerName} />
       </main>
     </>
   );
