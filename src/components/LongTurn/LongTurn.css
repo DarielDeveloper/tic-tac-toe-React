@@ -1,4 +1,7 @@
 #logTurns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   max-width: 50rem;
   color: white;
   list-style: none;
